@@ -40,7 +40,19 @@ const App: React.FC = () => {
   };
 
   const calculateTimeLeft = useCallback((): TimeLeft | null => {
-    const difference = +new Date(CONFIG.targetDate) - +new Date();
+    // Robust date parsing for older browsers (replace T with space if needed, though most handle it)
+    // Better yet, use manual construction to avoid NaN
+    const target = new Date(CONFIG.targetDate); 
+    if (isNaN(target.getTime())) {
+        // Fallback for very old Safari/TVs that hate ISO strings
+        // Assuming format YYYY-MM-DDTHH:mm:ss
+        const parts = CONFIG.targetDate.split(/[-T:]/);
+        // Date(year, monthIndex, day, hours, minutes, seconds)
+        target.setFullYear(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        target.setHours(parseInt(parts[3]), parseInt(parts[4]), parseInt(parts[5]));
+    }
+    
+    const difference = +target - +new Date();
 
     if (difference <= 0) {
       return null;
@@ -129,7 +141,7 @@ const App: React.FC = () => {
 
         {/* 3. COUNTDOWN (Bottom) */}
         {stage === "countdown" && (
-          <div className="relative z-20 flex flex-col items-center animate-in fade-in zoom-in duration-1000 mt-[2vh]">
+          <div className="relative z-20 flex flex-col items-center mt-[2vh]">
             <CountdownDisplay timeLeft={timeLeft} />
             <p
               onClick={triggerMidnightSequence}
