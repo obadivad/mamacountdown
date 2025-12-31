@@ -24,6 +24,12 @@ export default defineConfig(({ mode }) => {
       build: {
         target: 'es2015',
         polyfillDynamicImport: false,
+        rollupOptions: {
+          input: {
+            main: path.resolve(__dirname, 'index.html'),
+            simple: path.resolve(__dirname, 'simple.html'),
+          },
+        },
       },
       resolve: {
         alias: {

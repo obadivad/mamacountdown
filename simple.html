@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mama Shelter Lisboa - Simple Countdown</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Bungee&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo {
+            font-family: 'Bungee', cursive;
+            font-size: 8vw;
+            line-height: 1;
+            margin-bottom: 2vh;
+            text-shadow: 4px 4px 0px #333;
+        }
+
+        .logo span {
+            display: block;
+        }
+
+        .sub-message {
+            color: #ec4899; /* pink-500 */
+            font-weight: 900;
+            font-size: 2vw;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            margin-bottom: 5vh;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 2vw;
+            margin-top: 2vh;
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .number {
+            font-size: 15vw;
+            font-weight: 900;
+            line-height: 1;
+            font-family: monospace; /* Monospaced for numbers alignment */
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .label {
+            font-size: 1.5vw;
+            color: #ec4899; /* pink-500 */
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-top: 1vh;
+            font-weight: 700;
+        }
+
+        .separator {
+            font-size: 10vw;
+            color: #666;
+            margin-top: 1vh;
+            opacity: 0.5;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 3vh;
+            font-size: 1vw;
+            letter-spacing: 0.3em;
+            opacity: 0.4;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 12vw; }
+            .sub-message { font-size: 3vw; }
+            .number { font-size: 12vw; }
+            .label { font-size: 2.5vw; }
+            .footer { font-size: 2vw; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <span>MAMA</span>
+            <span>SHELTER</span>
+        </div>
+        <div class="sub-message">Flashback Party</div>
+
+        <div class="countdown" id="countdown">
+            <div class="time-unit">
+                <span class="number" id="days">00</span>
+                <span class="label">Days</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-unit">
+                <span class="number" id="hours">00</span>
+                <span class="label">Hours</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-unit">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Minutes</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-unit">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Seconds</span>
+            </div>
+        </div>
+
+        <div class="footer">Mama Shelter Lisboa</div>
+    </div>
+
+    <script>
+        // Configuration
+        var TARGET_DATE = "2026-01-01T00:00:00";
+        
+        function updateCountdown() {
+            var target = new Date(TARGET_DATE);
+            var now = new Date();
+            var diff = target - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = '<div style="font-size: 10vw; color: #ec4899; font-family: \'Bungee\', cursive;">HAPPY 2026!</div>';
+                return;
+            }
+
+            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            var minutes = Math.floor((diff / 1000 / 60) % 60);
+            var seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Update immediately and then every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
