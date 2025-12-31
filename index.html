@@ -157,6 +157,20 @@
     }
 
   </style>
+  <script>
+    window.onerror = function(msg, url, line, col, error) {
+       // Only show on TV (simple heuristic: if regular user agent, console.error is enough)
+       // But for now, let's just create a hidden div we can toggle if needed, or print to a fixed overlay
+       var errDiv = document.getElementById('debug-error-overlay');
+       if (!errDiv) {
+         errDiv = document.createElement('div');
+         errDiv.id = 'debug-error-overlay';
+         errDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;background:rgba(200,0,0,0.8);color:white;z-index:9999;font-size:24px;padding:20px;pointer-events:none;';
+         document.body.appendChild(errDiv);
+       }
+       errDiv.innerHTML += '<div>' + msg + ' at ' + line + ':' + col + '</div>';
+    };
+  </script>
 </head>
 <body class="text-white font-sans">
   <div id="root"></div>
