@@ -237,7 +237,7 @@ const App: React.FC = () => {
       {/* --- INTERACTIVE COMPONENTS --- */}
 
       {/* Ticker - Only shows during Countdown to avoid cluttering the Explosion */}
-      {stage === "countdown" && <MessageTicker messages={messages} />}
+      {/* {stage === "countdown" && <MessageTicker messages={messages} />} */}
 
       {/* Message Input Trigger - Visible always unless in Overdrive */}
       {/* 
