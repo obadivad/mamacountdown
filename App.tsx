@@ -42,16 +42,24 @@ const App: React.FC = () => {
   const calculateTimeLeft = useCallback((): TimeLeft | null => {
     // Robust date parsing for older browsers (replace T with space if needed, though most handle it)
     // Better yet, use manual construction to avoid NaN
-    const target = new Date(CONFIG.targetDate); 
+    const target = new Date(CONFIG.targetDate);
     if (isNaN(target.getTime())) {
-        // Fallback for very old Safari/TVs that hate ISO strings
-        // Assuming format YYYY-MM-DDTHH:mm:ss
-        const parts = CONFIG.targetDate.split(/[-T:]/);
-        // Date(year, monthIndex, day, hours, minutes, seconds)
-        target.setFullYear(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-        target.setHours(parseInt(parts[3]), parseInt(parts[4]), parseInt(parts[5]));
+      // Fallback for very old Safari/TVs that hate ISO strings
+      // Assuming format YYYY-MM-DDTHH:mm:ss
+      const parts = CONFIG.targetDate.split(/[-T:]/);
+      // Date(year, monthIndex, day, hours, minutes, seconds)
+      target.setFullYear(
+        parseInt(parts[0]),
+        parseInt(parts[1]) - 1,
+        parseInt(parts[2])
+      );
+      target.setHours(
+        parseInt(parts[3]),
+        parseInt(parts[4]),
+        parseInt(parts[5])
+      );
     }
-    
+
     const difference = +target - +new Date();
 
     if (difference <= 0) {
@@ -109,7 +117,7 @@ const App: React.FC = () => {
       <GlitterCanvas />
 
       {/* --- MAIN CONTENT AREA --- */}
-      <main className="relative z-30 flex flex-col items-center justify-center w-full h-full pb-[5vh]">
+      <main className="relative z-30 flex flex-col items-center justify-center w-full h-full pb-[5vh] flex-1">
         {/* 1. MAMA LOGO (Top) */}
         <div
           className={`relative z-20 transform-gpu transition-opacity duration-500 ${
