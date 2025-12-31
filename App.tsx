@@ -240,6 +240,7 @@ const App: React.FC = () => {
       {stage === "countdown" && <MessageTicker messages={messages} />}
 
       {/* Message Input Trigger - Visible always unless in Overdrive */}
+      {/* 
       {stage !== "overdrive" && (
         <button
           onClick={() => setIsModalOpen(true)}
@@ -249,6 +250,7 @@ const App: React.FC = () => {
           <MessageSquarePlus size={24} className="group-hover:animate-bounce" />
         </button>
       )}
+      */}
 
       {/* Modals */}
       <MessageModal
