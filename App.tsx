@@ -120,7 +120,7 @@ const App: React.FC = () => {
       <main className="relative z-30 flex flex-col items-center justify-center w-full h-full pb-[5vh] flex-1">
         {/* 1. MAMA LOGO (Top) */}
         <div
-          className={`relative z-20 transform-gpu transition-opacity duration-500 ${
+          className={`relative z-20 ${
             stage === "overdrive" ? "opacity-0" : "opacity-100"
           }`}
         >
@@ -138,7 +138,6 @@ const App: React.FC = () => {
         <div
           className={`
             relative z-10 my-[2vh]
-            transform-gpu transition-all duration-[2000ms] ease-in-out
             ${stage === "countdown" ? "scale-150 opacity-100" : ""}
             ${stage === "overdrive" ? "scale-[3] z-50" : ""}
             ${stage === "party" ? "scale-0 opacity-0 hidden" : ""}
