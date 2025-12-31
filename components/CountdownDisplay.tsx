@@ -11,13 +11,13 @@ const CountdownDisplay: React.FC<Props> = ({ timeLeft }) => {
     <div className="flex flex-col items-center px-[1vw] md:px-[2vw]">
       <div 
         className="font-black font-mono tracking-tighter text-white glow-text leading-none"
-        style={{ fontSize: 'min(15vw, 25vh)' }}
+        style={{ fontSize: '15vw' }}
       >
         {value.toString().padStart(2, '0')}
       </div>
       <div 
         className="font-bold tracking-[0.3em] text-pink-400 uppercase mt-[1vh]"
-        style={{ fontSize: 'min(1.5vw, 2.5vh)' }}
+        style={{ fontSize: '1.5vw' }}
       >
         {label}
       </div>
