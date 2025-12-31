@@ -60,7 +60,12 @@ const GlitterCanvas: React.FC = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       particles = [];
-      for (let i = 0; i < 150; i++) {
+      // Reduce particle count significantly for TV performance
+      // If screen is large (TV), use fewer particles per area to save CPU
+      const isTV = window.innerWidth > 1600; 
+      const count = isTV ? 50 : 100; 
+      
+      for (let i = 0; i < count; i++) {
         particles.push(new Particle(canvas.width, canvas.height));
       }
     };
