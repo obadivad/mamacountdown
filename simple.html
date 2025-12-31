@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mama Shelter Lisboa - Simple Countdown</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Bungee&display=swap" rel="stylesheet">
+    <title>Mama Shelter Lisboa - New Year 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;700;900&family=Bungee&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --glow-color: rgba(255, 105, 180, 0.6);
+        }
+
         body {
             background-color: #000;
             color: #fff;
@@ -14,48 +18,146 @@
             padding: 0;
             height: 100vh;
             width: 100vw;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
-            text-align: center;
+            user-select: none;
         }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        #app-container {
+            position: relative;
             width: 100%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .logo {
-            font-family: 'Bungee', cursive;
-            font-size: 8vw;
-            line-height: 1;
+        /* --- BACKGROUND --- */
+        .bg-radial {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0,100,255,0.15) 0%, rgba(0,0,0,1) 100%);
+            z-index: 0;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* --- LOGO --- */
+        .mama-logo-container {
+            position: relative;
+            z-index: 10;
+            transform: scale(0.8);
             margin-bottom: 2vh;
-            text-shadow: 4px 4px 0px #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .logo span {
-            display: block;
+        .mama-text-row {
+            display: flex;
+            align-items: flex-end;
+            line-height: 1;
         }
 
-        .sub-message {
-            color: #ec4899; /* pink-500 */
-            font-weight: 900;
-            font-size: 2vw;
-            letter-spacing: 0.5em;
-            text-transform: uppercase;
-            margin-bottom: 5vh;
+        .mama-char {
+            font-family: 'Bungee', cursive;
+            font-size: 15vh;
+            color: white;
+            text-shadow: 
+                1px 1px 0px #222,
+                2px 2px 0px #222,
+                3px 3px 0px #222,
+                4px 4px 0px #222,
+                5px 5px 0px #222,
+                6px 6px 15px rgba(0,0,0,0.8);
+            border: 2px solid rgba(255,255,255,0.2);
+            padding: 0 1vw;
+            margin: 0 -0.5vw;
+            position: relative;
         }
 
+        .lisboa-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 10vh;
+            color: white;
+            transform: rotate(-8deg) skew(-10deg);
+            margin-top: -8vh;
+            z-index: 20;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        
+        .lisboa-texture {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.2) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 6px 6px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* --- DISCO BALL --- */
+        .disco-ball-container {
+            position: relative;
+            width: 25vh;
+            height: 25vh;
+            margin: 2vh 0;
+            z-index: 5;
+            transition: transform 1s ease;
+        }
+
+        .disco-ball {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 50px rgba(255,255,255,0.15);
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .facet {
+            width: 8.33%; /* 12 cols */
+            height: 8.33%; /* 12 rows */
+            background: rgba(255,255,255,0.1);
+            border: 0.5px solid rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
+
+        .disco-string {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            width: 2px;
+            height: 50vh;
+            background: linear-gradient(to top, #666, transparent);
+            transform: translateX(-50%);
+        }
+
+        @keyframes pulse-facet {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; background-color: rgba(255,255,255,0.9); box-shadow: 0 0 5px white; }
+        }
+
+        /* --- COUNTDOWN --- */
         .countdown {
             display: flex;
             gap: 2vw;
             margin-top: 2vh;
+            z-index: 10;
         }
 
         .time-unit {
@@ -68,7 +170,7 @@
             font-size: 15vw;
             font-weight: 900;
             line-height: 1;
-            font-family: monospace; /* Monospaced for numbers alignment */
+            font-family: monospace;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
@@ -88,6 +190,65 @@
             opacity: 0.5;
         }
 
+        /* --- PARTY MODE --- */
+        #party-container {
+            display: none;
+            position: absolute;
+            inset: 0;
+            z-index: 100;
+            background-color: transparent;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .party-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            color: white;
+            line-height: 1.2;
+            animation: slam-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+        }
+
+        .year-text {
+            font-family: 'Bungee', cursive;
+            font-size: 20vw;
+            background: linear-gradient(to bottom, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));
+            margin-top: 2vh;
+        }
+
+        .rainbow-text {
+            animation: rainbow 2s infinite linear;
+        }
+
+        @keyframes slam-in {
+            0% { transform: scale(3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff00cc; transform: scale(1) rotate(-2deg); }
+            50% { color: #00d4ff; transform: scale(1.1) rotate(2deg); }
+            100% { color: #ff00cc; transform: scale(1) rotate(-2deg); }
+        }
+
+        @keyframes strobe-bg {
+            0% { background-color: #000; }
+            25% { background-color: #220022; }
+            50% { background-color: #000044; }
+            75% { background-color: #222; }
+            100% { background-color: #000; }
+        }
+
+        .animate-strobe {
+            animation: strobe-bg 0.2s infinite;
+        }
+
         .footer {
             position: absolute;
             bottom: 3vh;
@@ -95,78 +256,231 @@
             letter-spacing: 0.3em;
             opacity: 0.4;
             text-transform: uppercase;
+            z-index: 10;
         }
-
+        
         @media (max-width: 768px) {
-            .logo { font-size: 12vw; }
-            .sub-message { font-size: 3vw; }
-            .number { font-size: 12vw; }
-            .label { font-size: 2.5vw; }
+            .mama-char { font-size: 10vh; }
+            .lisboa-text { font-size: 8vh; margin-top: -6vh; }
+            .number { font-size: 18vw; }
+            .separator { font-size: 12vw; }
+            .label { font-size: 3vw; }
             .footer { font-size: 2vw; }
+            .disco-ball-container { width: 20vh; height: 20vh; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <span>MAMA</span>
-            <span>SHELTER</span>
-        </div>
-        <div class="sub-message">Flashback Party</div>
+    <div id="app-container">
+        <!-- Canvas for glitter -->
+        <canvas id="glitter-canvas"></canvas>
+        <div class="bg-radial"></div>
 
-        <div class="countdown" id="countdown">
-            <div class="time-unit">
-                <span class="number" id="days">00</span>
-                <span class="label">Days</span>
+        <!-- STAGE 1: COUNTDOWN -->
+        <div id="countdown-stage" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            
+            <!-- MAMA LOGO -->
+            <div class="mama-logo-container">
+                <div class="mama-text-row">
+                    <div class="mama-char">M</div>
+                    <div class="mama-char">A</div>
+                    <div class="mama-char">M</div>
+                    <div class="mama-char">A</div>
+                </div>
+                <div class="lisboa-text">
+                    Lisboa
+                    <div class="lisboa-texture"></div>
+                </div>
             </div>
-            <div class="separator">:</div>
-            <div class="time-unit">
-                <span class="number" id="hours">00</span>
-                <span class="label">Hours</span>
+
+            <!-- DISCO BALL -->
+            <div class="disco-ball-container">
+                <div class="disco-string"></div>
+                <div class="disco-ball" id="disco-ball">
+                    <!-- Facets generated by JS -->
+                </div>
             </div>
-            <div class="separator">:</div>
-            <div class="time-unit">
-                <span class="number" id="minutes">00</span>
-                <span class="label">Minutes</span>
+
+            <!-- COUNTDOWN -->
+            <div class="countdown" id="countdown">
+                <!-- Days removed as requested -->
+                <div class="time-unit">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">Hours</span>
+                </div>
+                <div class="separator">:</div>
+                <div class="time-unit">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">Minutes</span>
+                </div>
+                <div class="separator">:</div>
+                <div class="time-unit">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Seconds</span>
+                </div>
             </div>
-            <div class="separator">:</div>
-            <div class="time-unit">
-                <span class="number" id="seconds">00</span>
-                <span class="label">Seconds</span>
-            </div>
+
+            <div class="footer">Mama Shelter Lisboa</div>
         </div>
 
-        <div class="footer">Mama Shelter Lisboa</div>
+        <!-- STAGE 2: PARTY -->
+        <div id="party-container">
+            <div class="party-text" style="font-size: 4vw; animation-delay: 0.1s;">MAMA</div>
+            <div class="party-text" style="font-size: 3vw; letter-spacing: 0.5em; margin-bottom: 2vh; animation-delay: 0.2s;">WISHES YOU A</div>
+            <div style="display: flex; gap: 2vw; align-items: center;">
+                <div class="party-text rainbow-text" style="font-family: 'Bungee', cursive; font-size: 6vw; animation-delay: 0.4s;">HAPPY</div>
+                <div class="party-text" style="font-size: 4vw; animation-delay: 0.5s;">&</div>
+                <div class="party-text rainbow-text" style="font-family: 'Bungee', cursive; font-size: 6vw; animation-delay: 0.6s; color: #ec4899;">AMAZING</div>
+            </div>
+            <div class="party-text year-text" style="animation-delay: 0.8s;">2026</div>
+        </div>
     </div>
 
     <script>
-        // Configuration
-        var TARGET_DATE = "2026-01-01T00:00:00";
-        
+        // --- CONFIG ---
+        const TARGET_DATE = "2026-01-01T00:00:00";
+        let isPartyMode = false;
+
+        // --- DISCO BALL GENERATOR ---
+        function createDiscoBall() {
+            const ball = document.getElementById('disco-ball');
+            const totalFacets = 144; // 12x12
+            for (let i = 0; i < totalFacets; i++) {
+                const facet = document.createElement('div');
+                facet.className = 'facet';
+                
+                // Randomize facet simple animation
+                const duration = 3 + Math.random() * 5;
+                const delay = Math.random() * 5;
+                
+                facet.style.animation = `pulse-facet ${duration}s infinite ease-in-out ${delay}s`;
+                facet.style.background = Math.random() > 0.8 ? 'rgba(255,255,255,0.4)' : `rgba(255,255,255,${0.05 + Math.random() * 0.15})`;
+                
+                ball.appendChild(facet);
+            }
+        }
+
+        // --- GLITTER CANVAS (Simplified) ---
+        function initGlitter() {
+            const canvas = document.getElementById('glitter-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.5;
+                    this.speedY = (Math.random() - 0.5) * 0.5;
+                    this.alpha = Math.random();
+                    this.decay = 0.005 + Math.random() * 0.01;
+                    const colors = ['#fff', '#ec4899', '#00ffff'];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.alpha -= this.decay;
+                    if (this.alpha <= 0) this.reset();
+                }
+                draw() {
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // Create fewer particles for performance
+            for(let i=0; i<50; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // --- COUNTDOWN LOGIC ---
         function updateCountdown() {
-            var target = new Date(TARGET_DATE);
-            var now = new Date();
-            var diff = target - now;
+            if (isPartyMode) return;
+
+            const target = new Date(TARGET_DATE);
+            const now = new Date();
+            const diff = target - now;
 
             if (diff <= 0) {
-                document.getElementById('countdown').innerHTML = '<div style="font-size: 10vw; color: #ec4899; font-family: \'Bungee\', cursive;">HAPPY 2026!</div>';
+                startParty();
                 return;
             }
 
-            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            var minutes = Math.floor((diff / 1000 / 60) % 60);
-            var seconds = Math.floor((diff / 1000) % 60);
+            // Days are calculated but not shown in individual slots, 
+            // BUT usually "Hours" should theoretically include days * 24 if we hide days? 
+            // Or just ignore days? User said "remove days, just keep hours".
+            // If it's > 24h, showing just hours (0-23) might be misleading. 
+            // I will assume they want total hours or just the standard breakdown minus days.
+            // Usually "remove days" implies 24h+ logic or they are testing for tonight. 
+            // I will implement standard breakdown. If days > 0, they are just hidden (which might be weird).
+            // BETTER: Add days * 24 to hours.
+            
+            let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            let minutes = Math.floor((diff / 1000 / 60) % 60);
+            let seconds = Math.floor((diff / 1000) % 60);
 
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            // Add days to hours for the "No Days" display preference
+            hours += days * 24;
+
+            // Handle potential 3-digit hours if far away
             document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
             document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
 
-        // Update immediately and then every second
+        function startParty() {
+            if (isPartyMode) return;
+            isPartyMode = true;
+
+            // Hide countdown stage
+            document.getElementById('countdown-stage').style.display = 'none';
+            
+            // Show party container
+            const party = document.getElementById('party-container');
+            party.style.display = 'flex';
+            
+            // Enable strobe on body
+            document.body.classList.add('animate-strobe');
+
+            // Add crazy particles or just let CSS do the work
+        }
+
+        // --- INIT ---
+        createDiscoBall();
+        initGlitter();
         updateCountdown();
         setInterval(updateCountdown, 1000);
+        
+        // Debug helper: Click logo to test party mode
+        document.querySelector('.mama-logo-container').addEventListener('click', () => {
+             // startParty(); // Uncomment to test
+        });
+
     </script>
 </body>
 </html>
