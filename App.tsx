@@ -7,11 +7,17 @@ import CountdownDisplay from "./components/CountdownDisplay";
 import MamaLogo from "./components/MamaLogo";
 import MessageTicker from "./components/MessageTicker";
 import MessageModal from "./components/MessageModal";
+import SimpleCountdown from "./components/SimpleCountdown";
 import { MessageSquarePlus } from "lucide-react";
 
 type AnimationStage = "countdown" | "overdrive" | "party";
 
 const App: React.FC = () => {
+  // Simple check for /A route
+  if (window.location.pathname === '/A') {
+    return <SimpleCountdown />;
+  }
+
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
     hours: 0,
