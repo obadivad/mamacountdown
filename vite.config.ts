@@ -13,7 +13,8 @@ export default defineConfig(({ mode }) => {
       plugins: [
         react(),
         legacy({
-          targets: ['defaults', 'not IE 11'],
+          targets: ['chrome >= 40', 'safari >= 9', 'ios >= 9'],
+          additionalLegacyPolyfills: ['regenerator-runtime/runtime']
         }),
       ],
       define: {
