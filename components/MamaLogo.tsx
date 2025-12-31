@@ -21,41 +21,17 @@ const MamaLogo: React.FC = () => {
         {['M', 'A', 'M', 'A'].map((char, i) => {
           const isA = char === 'A';
           return (
-            <div key={i} className="relative mama-extrusion transform transition-transform hover:scale-105 duration-300">
+            <div key={i} className="relative mama-extrusion">
               {/* Main Letter Shell */}
               <div 
                 className="relative text-[18vh] md:text-[22vh] font-black leading-none italic tracking-tighter overflow-hidden border-2 border-white/20"
                 style={{ 
                   fontFamily: "'Bungee', cursive",
-                  // Simplified gradient for TV compatibility
-                  background: 'linear-gradient(to bottom, #4ade80 0%, #4ade80 75%, #ff69b4 75%, #ff69b4 100%)',
-                  WebkitBackgroundClip: 'text',
-                  // Fallback color in case text-fill-color fails
-                  color: 'white', 
-                  WebkitTextFillColor: 'transparent',
-                  WebkitTextStroke: '2px rgba(255,255,255,0.3)',
+                  color: 'white' // Simplify to plain white for testing
                 }}
               >
                 {char}
-                {/* Internal Tiles overlay - Reduced opacity for safer rendering */}
-                <div className="absolute inset-0 mirror-tiles-logo opacity-20 pointer-events-none" />
               </div>
-
-              {/* Tiled Heart for 'A's */}
-              {isA && (
-                <div className="absolute top-[48%] left-[52%] -translate-x-1/2 -translate-y-1/2 z-20">
-                  <div className="relative w-[3.5vw] h-[3.5vw] md:w-[4vw] md:h-[4vw] flex items-center justify-center">
-                     <svg viewBox="0 0 24 24" className="w-full h-full drop-shadow-[0_0_8px_rgba(255,105,180,1)]">
-                        <defs>
-                          <pattern id={`heart-tiles-${i}`} x="0" y="0" width="0.2" height="0.2">
-                            <rect width="10" height="10" fill="#ff69b4" stroke="white" strokeWidth="0.5" />
-                          </pattern>
-                        </defs>
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill={`url(#heart-tiles-${i})`} stroke="white" strokeWidth="1"/>
-                      </svg>
-                  </div>
-                </div>
-              )}
             </div>
           );
         })}
