@@ -27,15 +27,18 @@ const MamaLogo: React.FC = () => {
                 className="relative text-[18vh] md:text-[22vh] font-black leading-none italic tracking-tighter overflow-hidden border-2 border-white/20"
                 style={{ 
                   fontFamily: "'Bungee', cursive",
+                  // Simplified gradient for TV compatibility
                   background: 'linear-gradient(to bottom, #4ade80 0%, #4ade80 75%, #ff69b4 75%, #ff69b4 100%)',
                   WebkitBackgroundClip: 'text',
+                  // Fallback color in case text-fill-color fails
+                  color: 'white', 
                   WebkitTextFillColor: 'transparent',
                   WebkitTextStroke: '2px rgba(255,255,255,0.3)',
                 }}
               >
                 {char}
-                {/* Internal Tiles overlay for the text */}
-                <div className="absolute inset-0 mirror-tiles-logo opacity-40 mix-blend-overlay pointer-events-none" />
+                {/* Internal Tiles overlay - Reduced opacity for safer rendering */}
+                <div className="absolute inset-0 mirror-tiles-logo opacity-20 pointer-events-none" />
               </div>
 
               {/* Tiled Heart for 'A's */}
@@ -70,7 +73,7 @@ const MamaLogo: React.FC = () => {
         >
           Lisboa
           {/* Tile texture for Lisboa script */}
-          <div className="absolute inset-0 mirror-tiles-logo opacity-30 mix-blend-overlay pointer-events-none" />
+          <div className="absolute inset-0 mirror-tiles-logo opacity-30 pointer-events-none" />
         </div>
         
         {/* Animated Glitter/Glints on Lisboa */}
