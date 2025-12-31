@@ -13,8 +13,9 @@ import { MessageSquarePlus } from "lucide-react";
 type AnimationStage = "countdown" | "overdrive" | "party";
 
 const App: React.FC = () => {
-  // Simple check for /A route
-  if (window.location.pathname === '/A') {
+  // Simple check for /A route (case insensitive)
+  const path = window.location.pathname.toLowerCase();
+  if (path === '/a' || path === '/a/') {
     return <SimpleCountdown />;
   }
 
