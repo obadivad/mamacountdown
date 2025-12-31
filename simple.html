@@ -152,6 +152,15 @@
             opacity: 0;
         }
 
+        .rainbow-container {
+            display: inline-block;
+        }
+        
+        .rainbow-container .rainbow-text {
+             animation: rainbow 2s infinite linear;
+             display: inline-block;
+        }
+
         .year-text {
             font-family: 'Bungee', cursive;
             font-size: 20vw;
@@ -160,10 +169,6 @@
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));
             margin-top: 2vh;
-        }
-
-        .rainbow-text {
-            animation: rainbow 2s infinite linear;
         }
 
         @keyframes slam-in {
@@ -244,12 +249,16 @@
 
         <!-- STAGE 2: PARTY -->
         <div id="party-container">
-            <div class="party-text" style="font-size: 4vw; animation-delay: 0.1s;">MAMA</div>
+            <div class="party-text" style="font-size: 4vw; animation-delay: 0.1s;">MAMA LISBOA</div>
             <div class="party-text" style="font-size: 3vw; letter-spacing: 0.5em; margin-bottom: 2vh; animation-delay: 0.2s;">WISHES YOU A</div>
             <div style="display: flex; gap: 2vw; align-items: center;">
-                <div class="party-text rainbow-text" style="font-family: 'Bungee', cursive; font-size: 6vw; animation-delay: 0.4s;">HAPPY</div>
+                <div class="party-text" style="animation-delay: 0.4s;">
+                    <span class="rainbow-container rainbow-text" style="font-family: 'Bungee', cursive; font-size: 6vw;">HAPPY</span>
+                </div>
                 <div class="party-text" style="font-size: 4vw; animation-delay: 0.5s;">&</div>
-                <div class="party-text rainbow-text" style="font-family: 'Bungee', cursive; font-size: 6vw; animation-delay: 0.6s; color: #ec4899;">AMAZING</div>
+                <div class="party-text" style="animation-delay: 0.6s;">
+                    <span class="rainbow-container rainbow-text" style="font-family: 'Bungee', cursive; font-size: 6vw; color: #ec4899;">AMAZING</span>
+                </div>
             </div>
             <div class="party-text year-text" style="animation-delay: 0.8s;">2026</div>
         </div>
@@ -368,7 +377,12 @@
         
         // Debug helper: Click logo to test party mode
         document.querySelector('.main-logo').addEventListener('click', () => {
-             // startParty(); // Uncomment to test
+             startParty(); 
+        });
+
+        // Debug helper: Click footer to test party mode
+        document.querySelector('.footer').addEventListener('click', () => {
+             startParty(); 
         });
 
     </script>
